@@ -1,0 +1,7 @@
+{
+  "name": "Haste Heart",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "development",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose"
+}

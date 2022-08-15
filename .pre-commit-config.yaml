@@ -1,0 +1,17 @@
+repos:
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.17
+    hooks:
+      - id: terraform-fmt
+      - id: terraform-validate
+      - id: tflint
+      - id: shellcheck
+  - repo: https://github.com/streetsidesoftware/cspell-cli
+    rev: v6.6.0
+    hooks:
+      - id: cspell
+  - repo: https://github.com/dnephin/pre-commit-golang
+    rev: v0.5.0
+    hooks:
+      - id: go-fmt
+      # - id: go-vet

@@ -1,0 +1,73 @@
+# https://taskfile.dev
+
+version: "3"
+
+tasks:
+  default:
+    cmds:
+      - go mod init terraform_test.go || true
+      - go test -v -timeout 30m
+    dir: test
+    env:
+      PGPASSFILE: "/workspace/question_3/.pgpass"
+  up:
+    cmds:
+      - docker compose up -d
+  bash:
+    interactive: true
+    cmds:
+      - docker compose exec development bash
+  rebuild:
+    cmds:
+      - docker compose up -d --build
+      - docker exec hasteheart-development-1 file /usr/local/bin/dockerize
+    env:
+      BUILDKIT_PROGRESS: plain
+  test:
+    cmds:
+      - pre-commit run --all-files --verbose
+  q1:
+    cmds:
+      - terraform init
+      - terraform apply --auto-approve
+    silent: true
+    dir: "./question_1/"
+  q2:
+    cmds:
+      - terraform init
+      - terraform apply --auto-approve
+    silent: true
+    dir: "./question_2/"
+  q3:
+    cmds:
+      - terraform init
+      - terraform apply --auto-approve
+    silent: true
+    dir: "./question_3/"
+  destroy:
+    cmds:
+      - task: q1d
+      - task: q2d
+      - task: q3d
+  q1d:
+    cmds:
+      - terraform destroy --auto-approve
+    silent: true
+    dir: "./question_1/"
+  q2d:
+    cmds:
+      - terraform destroy --auto-approve
+    silent: true
+    dir: "./question_2/"
+  q3d:
+    cmds:
+      - terraform destroy --auto-approve
+    silent: true
+    dir: "./question_3/"
+  psql:
+    cmds:
+      - psql --host "localhost" --username "user" --dbname "hasteheart"
+    env:
+      PGPASSFILE: "./.pgpass"
+    interactive: true
+    dir: "./question_3/"
