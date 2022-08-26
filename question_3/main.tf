@@ -1,4 +1,5 @@
 terraform {
+  required_version = "~> 1.2.7"
   required_providers {
     # https://github.com/kreuzwerker/terraform-provider-docker
     docker = {
