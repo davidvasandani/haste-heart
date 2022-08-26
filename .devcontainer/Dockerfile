@@ -97,7 +97,7 @@ RUN export LATEST_COMPOSE_VERSION=$(curl -sSL "https://api.github.com/repos/dock
 FROM base as dockerize
 ENV DOCKERIZE_VERSION=0.6.1
 RUN if [ "$(uname -m)" = "aarch64" ]; then \
-    echo "CPU architecture not supported"; \
+    curl -sL https://github.com/jwilder/dockerize/releases/download/v${DOCKERIZE_VERSION}/dockerize-linux-armhf-v${DOCKERIZE_VERSION}.tar.gz -o dockerize.tar.gz; \
     else \
     curl -sL https://github.com/jwilder/dockerize/releases/download/v${DOCKERIZE_VERSION}/dockerize-linux-amd64-v${DOCKERIZE_VERSION}.tar.gz -o dockerize.tar.gz; \
     fi \
@@ -112,4 +112,4 @@ COPY --from=tflint /usr/local/bin/tflint /usr/local/bin/tflint
 COPY --from=shellcheck /usr/local/bin/shellcheck /usr/local/bin/shellcheck
 COPY --from=docker-compose /usr/local/bin/docker-compose /usr/local/bin/docker-compose
 COPY --from=dockerize /usr/local/bin/dockerize /usr/local/bin/dockerize
-COPY .bashrc /root/.bashrc
+COPY .devcontainer/.bashrc /root/.bashrc
